@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Moto {
@@ -9,6 +10,8 @@ public class Moto {
     private Long id;
     @ManyToOne
     private Cliente cliente;
+    @OneToMany(mappedBy = "servico")
+    private List<Servico> servicos;
     private String marca;
     private String modelo;
     private String placa;

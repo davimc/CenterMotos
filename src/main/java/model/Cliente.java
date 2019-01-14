@@ -9,7 +9,7 @@ public class Cliente {
     @Id
     @GeneratedValue
     private long id;
-    @OneToMany
+    @OneToMany(mappedBy = "moto")
     private List<Moto> motos;
     private String nome;
     private String telefone;
