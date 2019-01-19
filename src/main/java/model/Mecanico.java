@@ -5,16 +5,23 @@ import java.util.Calendar;
 import java.util.List;
 
 @Entity
+@Table(name="mecanico")
 public class Mecanico {
     @Id
     @GeneratedValue
     private long id;
-    @OneToMany(mappedBy = "servico")
+    @OneToMany(mappedBy = "mecanico",targetEntity = Servico.class,fetch = FetchType.LAZY)
     private List<Servico> servicos;
     private String nome;
     @Temporal(TemporalType.DATE)
     private Calendar dataVinculacao, dataDesvinculacao;
-    private String status;
+    private boolean status;
+
+    public Mecanico(String nome, Calendar dataVinculacao) {
+        this.nome = nome;
+        this.dataVinculacao = dataVinculacao;
+        this.status = true;
+    }
 
     public long getId() {
         return id;
@@ -52,11 +59,11 @@ public class Mecanico {
         this.dataDesvinculacao = dataDesvinculacao;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 }

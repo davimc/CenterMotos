@@ -5,11 +5,12 @@ import java.util.Calendar;
 import java.util.List;
 
 @Entity
+@Table(name="cliente")
 public class Cliente {
     @Id
     @GeneratedValue
     private long id;
-    @OneToMany(mappedBy = "moto")
+    @OneToMany(mappedBy = "cliente",targetEntity = Moto.class,cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     private List<Moto> motos;
     private String nome;
     private String telefone;
