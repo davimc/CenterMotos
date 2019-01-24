@@ -5,27 +5,19 @@ import java.util.Calendar;
 import java.util.List;
 
 @Entity
-@Table(name="mecanico")
+@Table(name = "mecanico")
 public class Mecanico {
     @Id
     @GeneratedValue
     private long id;
-    @OneToMany(mappedBy = "mecanico",targetEntity = Servico.class,fetch = FetchType.LAZY)
-    private List<Servico> servicos;
-    private String nome;
-    @Temporal(TemporalType.DATE)
-    private Calendar dataVinculacao, dataDesvinculacao;
-    private boolean status;
-
-    public Mecanico(String nome, Calendar dataVinculacao) {
-        this.nome = nome;
-        this.dataVinculacao = dataVinculacao;
-        this.status = true;
-    }
 
     public long getId() {
         return id;
     }
+
+
+    @OneToMany(mappedBy = "mecanico", targetEntity = Servico.class, fetch = FetchType.LAZY)
+    private List<Servico> servicos;
 
     public List<Servico> getServicos() {
         return servicos;
@@ -35,6 +27,9 @@ public class Mecanico {
         this.servicos = servicos;
     }
 
+
+    private String nome;
+
     public String getNome() {
         return nome;
     }
@@ -42,6 +37,10 @@ public class Mecanico {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+
+    @Temporal(TemporalType.DATE)
+    private Calendar dataVinculacao, dataDesvinculacao;
 
     public Calendar getDataVinculacao() {
         return dataVinculacao;
@@ -59,6 +58,9 @@ public class Mecanico {
         this.dataDesvinculacao = dataDesvinculacao;
     }
 
+
+    private boolean status;
+
     public boolean getStatus() {
         return status;
     }
@@ -66,4 +68,22 @@ public class Mecanico {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+
+    public Mecanico(String nome, Calendar dataVinculacao) {
+        this.nome = nome;
+        this.dataVinculacao = dataVinculacao;
+        this.status = true;
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

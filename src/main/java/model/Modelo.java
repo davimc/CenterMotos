@@ -3,23 +3,18 @@ package model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="modelo")
+@Table(name = "modelo")
 public class Modelo {
     @Id
     @GeneratedValue
     private long id;
-    @ManyToOne
-    private Marca marca;
-    private String nome;
-
-    public Modelo(Marca marca, String nome) {
-        this.marca = marca;
-        this.nome = nome;
-    }
 
     public long getId() {
         return id;
     }
+
+    @ManyToOne
+    private Marca marca;
 
     public Marca getMarca() {
         return marca;
@@ -29,11 +24,20 @@ public class Modelo {
         this.marca = marca;
     }
 
+
+    private String nome;
+
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+
+    public Modelo(Marca marca, String nome) {
+        this.marca = marca;
         this.nome = nome;
     }
 }

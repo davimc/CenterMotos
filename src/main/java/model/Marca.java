@@ -4,21 +4,19 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="marca")
+@Table(name = "marca")
 public class Marca {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private long id;
-    @OneToMany
-    private List<Modelo> modelos;
-    String nome;
-
-    public Marca(String nome) {
-        this.nome = nome;
-    }
 
     public long getId() {
         return id;
     }
+
+
+    @OneToMany
+    private List<Modelo> modelos;
 
     public List<Modelo> getModelos() {
         return modelos;
@@ -28,6 +26,10 @@ public class Marca {
         this.modelos = modelos;
     }
 
+
+
+    private String nome;
+
     public String getNome() {
         return nome;
     }
@@ -35,4 +37,13 @@ public class Marca {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+
+
+    public Marca(String nome, List<Modelo> modelos) {
+        this.nome = nome;
+        this.modelos = modelos;
+    }
+
+
 }

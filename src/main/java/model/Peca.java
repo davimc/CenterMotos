@@ -4,39 +4,31 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="peca")
+@Table(name = "peca")
 public class Peca {
     @Id
     @GeneratedValue
     private long id;
-    @ManyToMany(mappedBy = "pecas",targetEntity = Servico.class,fetch = FetchType.LAZY)
-    private List<Servico> servicos;
-    private String nome;
-    private double preco;
-    private int quantidade;
-    private String marca;
-    @ElementCollection @Column(length = 20, name="peca_modelos")
-    private List<String> modelos;
 
-    public Peca(String nome, double preco, int quantidade, String marca, List<String> modelos) {
-        this.nome = nome;
-        this.preco = preco;
-        this.quantidade = quantidade;
-        this.marca = marca;
-        this.modelos = modelos;
-    }
 
     public long getId() {
         return id;
     }
 
-//    public List<Servico> getServicos() {
-//        return servicos;
-//    }
-//
-//    public void setServicos(List<Servico> servicos) {
-//        this.servicos = servicos;
-//    }
+
+    @ManyToMany(mappedBy = "pecas", targetEntity = Venda.class, fetch = FetchType.LAZY)
+    private List<Venda> vendas;
+
+    public List<Venda> getServicos() {
+        return vendas;
+    }
+
+    public void setServicos(List<Venda> vendas) {
+        this.vendas = vendas;
+    }
+
+
+    private String nome;
 
     public String getNome() {
         return nome;
@@ -46,6 +38,9 @@ public class Peca {
         this.nome = nome;
     }
 
+
+    private double preco;
+
     public double getPreco() {
         return preco;
     }
@@ -53,6 +48,9 @@ public class Peca {
     public void setPreco(double preco) {
         this.preco = preco;
     }
+
+
+    private int quantidade;
 
     public int getQuantidade() {
         return quantidade;
@@ -62,6 +60,9 @@ public class Peca {
         this.quantidade = quantidade;
     }
 
+
+    private String marca;
+
     public String getMarca() {
         return marca;
     }
@@ -70,11 +71,25 @@ public class Peca {
         this.marca = marca;
     }
 
+
+    @ElementCollection
+    @Column(length = 20, name = "peca_modelos")
+    private List<String> modelos;
+
     public List<String> getModelos() {
         return modelos;
     }
 
     public void setModelos(List<String> modelos) {
+        this.modelos = modelos;
+    }
+
+
+    public Peca(String nome, double preco, int quantidade, String marca, List<String> modelos) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+        this.marca = marca;
         this.modelos = modelos;
     }
 }

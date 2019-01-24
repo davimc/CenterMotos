@@ -9,44 +9,21 @@ import java.util.Calendar;
 import java.util.List;
 
 @Entity
-@Table(name="servico")
+@Table(name = "servico")
 public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_moto")
-    @Fetch(FetchMode.JOIN)
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Moto moto;
-    @ManyToOne
-    @JoinColumn(name="id_mecanico")
-    private Mecanico mecanico;
-    @ManyToMany
-    @JoinTable(name="servicos_pecas",joinColumns =
-            {@JoinColumn(name="id_servico")},inverseJoinColumns=
-            {@JoinColumn(name="id_peca")})
-    private List<Peca> pecas;
-    @Temporal(TemporalType.DATE)
-    private Calendar dataInicio, dataTermino, dataPrevisao;
-    private String status;//ATIVO, FINALIZADO, CANCELADO
-    private boolean isPago;
-    private double orcamento;
-    private double precoFinal;
-
-    public Servico(Moto moto, Mecanico mecanico, Calendar dataInicio, Calendar dataPrevisao, double orcamento) {
-        //this.moto = moto;
-        this.mecanico = mecanico;
-        this.dataInicio = dataInicio;
-        this.dataPrevisao = dataPrevisao;
-        this.status = "ATIVO";
-        this.isPago = false;
-        this.orcamento = orcamento;
-    }
 
     public long getId() {
         return id;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idMoto")
+//    @Fetch(FetchMode.JOIN)
+//    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    private Moto moto;
 
     public Moto getMoto() {
         return moto;
@@ -56,6 +33,11 @@ public class Servico {
         this.moto = moto;
     }
 
+
+    @ManyToOne
+    @JoinColumn(name = "idMecanico")
+    private Mecanico mecanico;
+
     public Mecanico getMecanico() {
         return mecanico;
     }
@@ -64,13 +46,10 @@ public class Servico {
         this.mecanico = mecanico;
     }
 
-    public List<Peca> getPecas() {
-        return pecas;
-    }
 
-    public void setPecas(List<Peca> pecas) {
-        this.pecas = pecas;
-    }
+
+    @Temporal(TemporalType.DATE)
+    private Calendar dataInicio, dataTermino, dataPrevisao;
 
     public Calendar getDataInicio() {
         return dataInicio;
@@ -96,18 +75,42 @@ public class Servico {
         this.dataPrevisao = dataPrevisao;
     }
 
-    public String getStatus() {
-        return status;
+
+    private boolean isCancelado;
+
+    public boolean isCancelado() {
+        return isCancelado;
     }
 
-    public void cancelaServico() {
-        this.status = "CANCELADO";
-        this.dataTermino = Calendar.getInstance();
+    public void setCancelado(boolean cancelado) {
+        isCancelado = cancelado;
     }
-    public void finalizaServico(){
-        this.status = "FINALIZADO";
-        this.dataTermino = Calendar.getInstance();
+
+
+    private boolean isFinalizado;
+
+    public boolean isFinalizado() {
+        return isFinalizado;
     }
+
+    public void setFinalizado(boolean finalizado) {
+        isFinalizado = finalizado;
+    }
+
+
+    private boolean isPago;
+
+
+    public boolean isPago() {
+        return isPago;
+    }
+
+    public void setPago(boolean pago) {
+        isPago = pago;
+    }
+
+    private double orcamento;
+
     public double getOrcamento() {
         return orcamento;
     }
@@ -115,6 +118,9 @@ public class Servico {
     public void setOrcamento(double orcamento) {
         this.orcamento = orcamento;
     }
+
+
+    private double precoFinal;
 
     public double getPrecoFinal() {
         return precoFinal;
@@ -124,4 +130,40 @@ public class Servico {
         this.precoFinal = precoFinal;
 
     }
+
+
+    private double valorServico;
+
+    public double getValorServico() {
+        return valorServico;
+    }
+
+    public void setValorServico(double valorServico) {
+        this.valorServico = valorServico;
+    }
+
+
+    @ElementCollection
+    @Column(length = 20, name = "peca_modelos")
+    private List<String> servicos;
+
+    public List<String> getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(List<String> servicos) {
+        this.servicos = servicos;
+    }
+
+    public Servico(Moto moto, Mecanico mecanico, Calendar dataInicio, Calendar dataPrevisao, double orcamento) {
+        this.moto = moto;
+        this.mecanico = mecanico;
+        this.dataInicio = dataInicio;
+        this.dataPrevisao = dataPrevisao;
+        this.isCancelado = false;
+        this.isFinalizado = false;
+        this.isPago = false;
+        this.orcamento = orcamento;
+    }
+
 }
