@@ -26,7 +26,7 @@ public class SelecionarCliente extends JFrame {
         });
         btnContinuar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                new SelecionarPecas();
+                new SelecionarPeca();
             }
         });
     }
