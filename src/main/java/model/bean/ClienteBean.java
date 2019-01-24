@@ -7,6 +7,7 @@ import org.hibernate.HibernateException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.util.List;
 
 public class ClienteBean {
@@ -31,6 +32,11 @@ public class ClienteBean {
     }
     public List<Cliente> listaClientes(){
         return this.manager.createQuery("FROM Cliente").getResultList();
+    }
+    public List<Cliente> ListaClientesNome(String nome) {
+        Query q = this.manager.createQuery("SELECT c FROM Cliente c WHERE c.nome=:nome");
+        q.setParameter("nome","%"+nome+"%");
+        return q.getResultList();
     }
 
 }

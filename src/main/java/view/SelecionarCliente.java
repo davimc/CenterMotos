@@ -1,6 +1,10 @@
 package view;
 
+import model.Cliente;
+import model.bean.ClienteBean;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,5 +33,22 @@ public class SelecionarCliente extends JFrame {
                 new SelecionarPeca();
             }
         });
+        btnBuscarComprador.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                DefaultTableModel modelo = new DefaultTableModel();
+                modelo.addColumn("nome");
+                modelo.addColumn("telefone");
+                modelo.addColumn("endereco");
+                pesquisaCliente(modelo, tfNomeComprador.getText()):
+            }
+        });
+
+    }
+    public static void pesquisaCliente(DefaultTableModel modelo, String nome{
+        modelo.setNumRows(0);
+        ClienteBean cBean = new ClienteBean();
+        for(Cliente c: cBean.ListaClientesNome(nome)){
+            modelo.addRow(new Object[]{c.getNome()})
+        }
     }
 }
